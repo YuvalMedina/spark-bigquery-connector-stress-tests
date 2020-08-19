@@ -1,21 +1,21 @@
 # spark-bigquery-connector-stress-tests
 Stress tests for the spark-bigquery-connector
 
-####Instructions:
+**Instructions:**
 			This is a test to run 3, 20, 100, 300, and 1000GB batch writes on the Spark-BigQuery connector's writesupport integration.
 	This test is to be run with the following command:
 		`gcloud dataproc jobs submit pyspark --cluster=<YOUR-CLUSTER> <LOCATION-OF-vortex.py> --jars=gs://ymed-titanic-data/connector.jar`
 	The location of the jar file above will change when the Spark <-> BigQuery WriteSupport integration is merged into the Spark Connector repository on GitHub, and is released.
 	The location of the file `vortex.py` will follow the pattern `<YOUR-WORKSPACE-DIRECTORY>/spark-bigquery-connector-stress-tests/vortex.py` upon a clone of this repository onto your machine.
-*Before running this test:*
+**Before running this test:**
 1. Please create / retrieve your Google Cloud Storage bucket name.
 2. Please replace variable `datasets_bucket` on line 53 of the file `vortex.py` with your bucket's name.
 3. Then please copy the datasets for the stress test into your bucket using the command `gsutil cp -r gs://ymed-titanic-data/stress-test-datasets <YOUR-BUCKET-NAME>` The data should show up in folder "datasets" in your Google Storage Bucket. Thus the default name for this folder should be "datasets".
 		* However, if you specified an inner directory in <YOUR-BUCKET-NAME>, the folder "datasets" will be nested inside the directory. In this case, simply copy the folder location inside your bucket (such as 'folder1/folder2/.../datasets') into variable `datasets_folder` on line 55 in file `vortex.py`
 4. Please create an appropriate cluster for testing. Your cluster must have pip packages `google-cloud-bigquery` and `google-cloud-storage` installed. A sample command to do this: `gcloud dataproc clusters create <YOUR-CLUSTER-NAME> --region=$REGION --initialization-actions=gs://goog-dataproc-initialization-actions-${REGION}/python/pip-install.sh --metadata='PIP_PACKAGES=google-cloud-storage google-cloud-bigquery' --num-workers=<NUMBER-OF-WORKERS> --worker-machine-type=<WORKER-MACHINE-TYPE>`
-* Please set your current Dataproc region using `export REGION=<DATAPROC_REGION>` before running this command.
-* If you wish to run stress tests for up to 1000GB, the recommended number of workers is 250, and the recommended machine type is "n2-standard-8". If your project doesn't have enough allowance for this, you may want to create your cluster with 120 workers, and use the standard machine type of "n1-standard-4": with this, you may run write jobs of up to 300GB.
-* If you wish to save detailed logs of jobs you may want to append the following to your cluster creation command:
+	* Please set your current Dataproc region using `export REGION=<DATAPROC_REGION>` before running this command.
+	* If you wish to run stress tests for up to 1000GB, the recommended number of workers is 250, and the recommended machine type is "n2-standard-8". If your project doesn't have enough allowance for this, you may want to create your cluster with 120 workers, and use the standard machine type of "n1-standard-4": with this, you may run write jobs of up to 300GB.
+	* If you wish to save detailed logs of jobs you may want to append the following to your cluster creation command:
 			`--properties dataproc:dataproc.logging.stackdriver.enable=true \
 			--properties dataproc:dataproc.logging.stackdriver.job.driver.enable=true \
 			--properties dataproc:dataproc.logging.stackdriver.job.yarn.container.enable=true \
@@ -62,6 +62,6 @@ Stress tests for the spark-bigquery-connector
 	For more information about how 'executors' and 'executorMemory' are set, refer to https://spark.apache.org/docs/2.4.5/configuration.html and see above about which Spark Configuration options are set for each variable.
 
 
-####Notes:
+**Notes:**
 * because this test recreates the SparkSession for every different size data set, the Spark UI on Dataproc will show the tests for each size in multiple separate Spark applications.
 * this stress test is meant to be as reconfigurable as possible, as such there are some variables that can be reconfigured below.
