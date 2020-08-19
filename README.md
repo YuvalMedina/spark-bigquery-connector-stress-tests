@@ -7,6 +7,7 @@ Stress tests for the spark-bigquery-connector
 		`gcloud dataproc jobs submit pyspark --cluster=<YOUR-CLUSTER> <LOCATION-OF-vortex.py> --jars=gs://ymed-titanic-data/connector.jar`
 	The location of the jar file above will change when the Spark <-> BigQuery WriteSupport integration is merged into the Spark Connector repository on GitHub, and is released.
 	The location of the file `vortex.py` will follow the pattern `<YOUR-WORKSPACE-DIRECTORY>/spark-bigquery-connector-stress-tests/vortex.py` upon a clone of this repository onto your machine.
+
 **Before running this test:**
 1. Please create / retrieve your Google Cloud Storage bucket name.
 2. Please replace variable `datasets_bucket` on line 53 of the file `vortex.py` with your bucket's name.
@@ -24,7 +25,7 @@ Stress tests for the spark-bigquery-connector
 			--properties yarn:yarn.nodemanager.remote-app-log-dir=gs://davidrab-sandbox/logs \
 			--properties yarn:yarn.log-aggregation.retain-seconds=-1 \` 
 
-	Here are descriptions for the test variables to reconfigure:
+**Reconfigurable variables**
 1. Datasets GCS bucket location: 'datasets_bucket'
 2. Datasets folder location within GCS bucket: 'datasets_folder'
 3. Dataset sizes (also the name of each dataset [3GB, 20GB, etc.]): 'dataset_sizes'
@@ -60,6 +61,7 @@ Stress tests for the spark-bigquery-connector
 	* for size = 300, executorMemory = ''
 	* for size = 1000, executorMemory = '17g' *The g here signifies 17GB of memory per executor*
 	For more information about how 'executors' and 'executorMemory' are set, refer to https://spark.apache.org/docs/2.4.5/configuration.html and see above about which Spark Configuration options are set for each variable.
+
 
 
 **Notes:**
