@@ -14,7 +14,15 @@ Stress tests for the spark-bigquery-connector
 		* However, if you specified an inner directory in <YOUR-BUCKET-NAME>, the folder "datasets" will be nested inside the directory. In this case, simply copy the folder location inside your bucket (such as 'folder1/folder2/.../datasets') into variable `datasets_folder` on line 55 in file `vortex.py`
 4. Please create an appropriate cluster for testing. Your cluster must have pip packages `google-cloud-bigquery` and `google-cloud-storage` installed. A sample command to do this: `gcloud dataproc clusters create <YOUR-CLUSTER-NAME> --region=$REGION --initialization-actions=gs://goog-dataproc-initialization-actions-${REGION}/python/pip-install.sh --metadata='PIP_PACKAGES=google-cloud-storage google-cloud-bigquery' --num-workers=<NUMBER-OF-WORKERS> --worker-machine-type=<WORKER-MACHINE-TYPE>`
 * Please set your current Dataproc region using `export REGION=<DATAPROC_REGION>` before running this command.
-* If you wish to run stress tests for up to 1000GB, the recommended number of workers is 250, and the recommended machine type is "n2-standard-8". If you don't have enough allowance for this, you may want to create your cluster with 120 workers, and use the standard machine type of "n1-standard-4": with this, you may run write jobs of up to 300GB.
+* If you wish to run stress tests for up to 1000GB, the recommended number of workers is 250, and the recommended machine type is "n2-standard-8". If your project doesn't have enough allowance for this, you may want to create your cluster with 120 workers, and use the standard machine type of "n1-standard-4": with this, you may run write jobs of up to 300GB.
+* If you wish to save detailed logs of jobs you may want to append the following to your cluster creation command:
+			`--properties dataproc:dataproc.logging.stackdriver.enable=true \
+			--properties dataproc:dataproc.logging.stackdriver.job.driver.enable=true \
+			--properties dataproc:dataproc.logging.stackdriver.job.yarn.container.enable=true \
+			--properties dataproc:jobs.file-backed-output.enable=true \
+			--properties yarn:yarn.log-aggregation-enable=true \
+			--properties yarn:yarn.nodemanager.remote-app-log-dir=gs://davidrab-sandbox/logs \
+			--properties yarn:yarn.log-aggregation.retain-seconds=-1 \` 
 
 	Here are descriptions for the test variables to reconfigure:
 1. Datasets GCS bucket location: 'datasets_bucket'
