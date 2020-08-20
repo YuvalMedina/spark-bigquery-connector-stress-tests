@@ -71,6 +71,7 @@ gcloud dataproc jobs submit pyspark \
   --properties yarn:yarn.nodemanager.remote-app-log-dir=gs://${BUCKET}/logs \
   --properties yarn:yarn.log-aggregation.retain-seconds=-1 
 ```
+4. Lastly, make sure to have you added your Dataproc cluster to the appropriate permission list (read/write) of your GCS bucket you will store your datasets in.
 
 **Reconfigurable variables**
 1. Datasets GCS bucket location:
