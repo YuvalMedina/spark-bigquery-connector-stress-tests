@@ -48,8 +48,12 @@ Stress tests for the spark-bigquery-connector
 9. 'executorMemory' = the memory allocated to each executor for a specific dataset size batch-write. Reconfigures the Spark 'spark.executor.memory' option. Refer to https://spark.apache.org/docs/2.4.5/configuration.html .
 
 
-	All 9 variables above can be found in the file vortex.py with the RECONFIGURABLE keyword (in a comment above / below). They can be specified when running the stress test, and all are optional except the bucket keyword.
-	However, the default values are as follows:
+
+<!-- -->
+
+All 9 variables above can be found in the file vortex.py with the RECONFIGURABLE keyword (in a comment above / below). They can be specified when running the stress test, and all are optional except the bucket keyword.
+
+The default values are as follows:
 1. datasets_bucket = '' *This variable must be changed and cannot be empty. Please create / retrieve your Google Cloud Storage bucket name, and set this variable to your bucket's name when running the test.
 2. datasets_folder = 'datasets'
 3. dataset_sizes = [3, 20, 100, 300, 1000]
