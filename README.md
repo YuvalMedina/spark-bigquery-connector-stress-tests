@@ -32,14 +32,16 @@ The location of the jar file above will change when the Spark <-> BigQuery Write
 2. Then please copy the datasets for the stress test into your bucket using the command:
 
 ```
-gsutil cp -r gs://ymed-titanic-data/stress-test-datasets \
-<YOUR-BUCKET-NAME>
+gcloud dataproc jobs submit pyspark \
+  --cluster=<YOUR-CLUSTER> \
+  <LOCATION-OF-save_datasets.py> \
+  -- \
+    <YOUR_BUCKET> \
+    [--user_folder=CONTAINING_FOLDER]
 ```
+* The optional `--user_folder` argument should be specified if you wish to place your datasets in a containing folder. Otherwise they will be placed in a defualt folder named `datasets`. Using the default option is recommended.
 
-
-* The data should show up in folder `datasets` in your Google Storage Bucket. Thus the command line argument `--datasets_folder` when running the stress test should be `datasets`.
-
-	* However, if you specified an inner directory in the `<YOUR-BUCKET-NAME>` argument when copying the datasets, the folder `datasets` will be nested inside the directory you specified.
+	* However, if you specified an inner directory in the `--user_folder` argument when copying the datasets, the folder `datasets` will be nested inside the directory you specified.
 	* In this case, every time you run your stress test you will have to pass as an argument the location inside your bucket that you specified (such as `folder1/folder2/.../datasets`) into variable `--datasets_folder`.
 		
 3. Please create an appropriate cluster for testing.
