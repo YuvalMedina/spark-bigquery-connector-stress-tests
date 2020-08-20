@@ -4,7 +4,6 @@ import time
 from google.cloud import bigquery
 from google.cloud import storage
 from datetime import datetime
-import statistics
 import sys
 import argparse
 

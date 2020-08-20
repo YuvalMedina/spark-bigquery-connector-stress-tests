@@ -18,7 +18,6 @@ import time
 from google.cloud import bigquery
 from google.cloud import storage
 from datetime import datetime
-import statistics
 import sys
 import argparse
 
@@ -43,7 +42,7 @@ import argparse
 ####
 #### Here are the reconfigurable Spark options for each dataset size (set these up below in 
 #### the writing loop, for each size. The default for each option is the empty string ''):
-## 8. 'executors': the maximum number of executors to allocate for each dataset size batch-writing
+## 8. 'executors': the maximum number of executors to allocate for each dataset size batch-writing job.
 ##			Reconfigures the Spark 'spark.dynamicAllocation.maxExecutors' option. When 'executors'
 ##			is specified, the 'spark.dynamicAllocation.enabled' is set to True automatically.
 ## 9. 'executorMemory' = the memory allocated to each executor for a specific dataset size batch-write.
